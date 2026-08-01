@@ -10,6 +10,18 @@ namespace CrudGitFlow.Controllers
     public class ProductosController : ControllerBase
     {
         private readonly ProductoRepository _repositorio;
+        // GET api/productos/resumen
+[HttpGet("resumen")]
+public ActionResult ObtenerResumen()
+{
+    var productos = _repositorio.ObtenerTodos();
+    return Ok(new
+    {
+        TotalProductos = productos.Count,
+        ValorTotalInventario = productos.Sum(p => p.Precio * p.Stock)
+    });
+}
+
 
         public ProductosController(ProductoRepository repositorio)
         {
